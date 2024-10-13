@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Phishing Detection Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option {
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result, #explanations {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .explanation {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .correct {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>AI Phishing Detection Quiz</h1>
+        <div id="quiz"></div>
+        <button id="submit">Submit Answers</button>
+        <div id="result"></div>
+        <div id="explanations"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is a common sign of a phishing email?",
+                options: [
+                    "Urgent language demanding immediate action",
+                    "Personalized greeting with your full name",
+                    "Links to well-known websites",
+                    "Clear and professional formatting"
+                ],
+                correct: 0,
+                explanation: "Phishing emails often use urgent language to pressure recipients into acting quickly without thinking. This tactic aims to bypass the victim's critical thinking skills."
+            },
+            {
+                question: "How can AI help in detecting phishing attempts?",
+                options: [
+                    "By automatically deleting all suspicious emails",
+                    "By analyzing patterns and identifying anomalies in email content and sender behavior",
+                    "By responding to phishing emails on your behalf",
+                    "By encrypting all your emails"
+                ],
+                correct: 1,
+                explanation: "AI excels at pattern recognition and anomaly detection. It can analyze various aspects of emails, including content, sender behavior, and metadata, to identify potential phishing attempts more accurately and quickly than traditional methods."
+            },
+            {
+                question: "What should you do if you suspect an email might be a phishing attempt?",
+                options: [
+                    "Reply asking for clarification",
+                    "Click on links to verify their authenticity",
+                    "Forward the email to all your contacts as a warning",
+                    "Report it to your IT department or email provider"
+                ],
+                correct: 3,
+                explanation: "The safest action is to report suspected phishing attempts to your IT department or email provider. They have the tools and expertise to handle such threats without putting your information at risk."
+            },
+            {
+                question: "Which of the following is NOT typically used by AI in phishing detection?",
+                options: [
+                    "Natural Language Processing (NLP)",
+                    "Machine Learning algorithms",
+                    "Facial recognition",
+                    "Behavioral analysis"
+                ],
+                correct: 2,
+                explanation: "While NLP, machine learning, and behavioral analysis are commonly used in AI-powered phishing detection, facial recognition is not typically relevant for analyzing email content or patterns."
+            },
+            {
+                question: "What is 'spear phishing'?",
+                options: [
+                    "A type of fishing that uses AI-powered lures",
+                    "A highly targeted phishing attack aimed at specific individuals or organizations",
+                    "A phishing technique that only works on mobile devices",
+                    "An anti-phishing strategy used by cybersecurity experts"
+                ],
+                correct: 1,
+                explanation: "Spear phishing is a more sophisticated form of phishing that targets specific individuals or organizations. These attacks are often more convincing because they use personalized information to appear legitimate."
+            },
+            {
+                question: "Which of the following is a key feature of AI-powered phishing detection systems?",
+                options: [
+                    "They can prevent all types of cyber attacks",
+                    "They learn and adapt to new phishing techniques over time",
+                    "They completely eliminate the need for human oversight",
+                    "They only work on desktop computers"
+                ],
+                correct: 1,
+                explanation: "AI-powered phishing detection systems can learn and adapt to new techniques over time. This adaptability is crucial in the ever-evolving landscape of cyber threats, allowing the system to stay up-to-date with the latest phishing tactics."
+            },
+            {
+                question: "What is 'pharming' in the context of cybersecurity?",
+                options: [
+                    "A technique to grow digital crops",
+                    "A method of harvesting user data ethically",
+                    "A cyber attack that redirects users to fake websites",
+                    "An AI-powered farming simulation game"
+                ],
+                correct: 2,
+                explanation: "Pharming is a cyber attack where users are redirected to fake websites that mimic legitimate ones, even when the user enters the correct web address. This is often done by exploiting vulnerabilities in DNS servers or local host files."
+            },
+            {
+                question: "How does AI use Natural Language Processing (NLP) in phishing detection?",
+                options: [
+                    "To translate phishing emails into different languages",
+                    "To analyze the content and context of messages for suspicious patterns",
+                    "To automatically respond to phishing attempts",
+                    "To generate convincing phishing emails for testing purposes"
+                ],
+                correct: 1,
+                explanation: "NLP allows AI to analyze the content and context of messages, identifying suspicious patterns in language use, tone, and structure that may indicate a phishing attempt. This goes beyond simple keyword matching to understand the nuances of communication."
+            },
+            {
+                question: "What is a 'watering hole attack' in cybersecurity?",
+                options: [
+                    "A method of conserving water in data centers",
+                    "A technique to flood servers with excess data",
+                    "An attack that targets websites frequently visited by a specific group",
+                    "A way to cool down overheating computers"
+                ],
+                correct: 2,
+                explanation: "A watering hole attack is a strategy where attackers compromise websites frequently visited by their target group. Instead of directly attacking the target, they wait for the target to visit the compromised site, hence the name 'watering hole'."
+            },
+            {
+                question: "How can AI help in reducing false positives in phishing detection?",
+                options: [
+                    "By flagging all emails as suspicious",
+                    "By using complex algorithms to analyze multiple factors simultaneously",
+                    "By completely replacing human judgment",
+                    "By deleting all emails from unknown senders"
+                ],
+                correct: 1,
+                explanation: "AI can reduce false positives by using complex algorithms to analyze multiple factors simultaneously. This includes sender reputation, email content, user behavior, and contextual information. By considering a wide range of indicators, AI can make more accurate determinations about whether an email is truly suspicious."
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const resultContainer = document.getElementById('result');
+        const explanationsContainer = document.getElementById('explanations');
+        const submitButton = document.getElementById('submit');
+
+        function buildQuiz() {
+            const output = [];
+
+            quizData.forEach((questionData, questionIndex) => {
+                const options = [];
+
+                for (let i = 0; i < questionData.options.length; i++) {
+                    options.push(
+                        `<label class="option">
+                            <input type="radio" name="question${questionIndex}" value="${i}">
+                            ${questionData.options[i]}
+                        </label>`
+                    );
+                }
+
+                output.push(
+                    `<div class="question">
+                        <p>${questionIndex + 1}. ${questionData.question}</p>
+                        <div class="options">${options.join('')}</div>
+                    </div>`
+                );
+            });
+
+            quizContainer.innerHTML = output.join('');
+        }
+
+        function showResults() {
+            const answerContainers = quizContainer.querySelectorAll('.options');
+            let score = 0;
+            let explanations = '';
+
+            quizData.forEach((questionData, questionIndex) => {
+                const answerContainer = answerContainers[questionIndex];
+                const selector = `input[name=question${questionIndex}]:checked`;
+                const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+                if (userAnswer === questionData.correct.toString()) {
+                    score++;
+                    explanations += `<div class="explanation">
+                        <p><span class="correct">Correct!</span> Question ${questionIndex + 1}: ${questionData.question}</p>
+                        <p>${questionData.explanation}</p>
+                    </div>`;
+                } else {
+                    explanations += `<div class="explanation">
+                        <p><span class="incorrect">Incorrect.</span> Question ${questionIndex + 1}: ${questionData.question}</p>
+                        <p>The correct answer was: ${questionData.options[questionData.correct]}</p>
+                        <p>${questionData.explanation}</p>
+                    </div>`;
+                }
+            });
+
+            resultContainer.innerHTML = `You scored ${score} out of ${quizData.length}`;
+            explanationsContainer.innerHTML = explanations;
+            explanationsContainer.style.display = 'block';
+            submitButton.style.display = 'none';
+        }
+
+        buildQuiz();
+
+        submitButton.addEventListener('click', showResults);
+    </script>
+</body>
+</html>
